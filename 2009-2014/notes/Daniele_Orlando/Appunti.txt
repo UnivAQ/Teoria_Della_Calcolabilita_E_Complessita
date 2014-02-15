@@ -1,0 +1,543 @@
+* Dimostrazioni
+        @"TM limitate.pdf"
+
+        * Il tempo necessario alla macchina di Turing mononastro per simulare n mosse della macchina di Turing con k nastri è O(n^2).
+                @"Il tempo necessario alla TM mononastro.pdf"
+
+
+        * Simulazione di un computer da parte di una  macchina di Turing multinastro.
+                @"Se un computer.pdf"
+
+
+        * Un computer può essere simulato per n passi da una macchina di Turing mononastro impiegando O(n^6) passi della macchina di Turing.
+
+
+        * L_d non è un linguaggio ricorsivamente enumerabile.
+                Per essere RE deve esistere una TM M che accetti L_d.
+                Supponiamo che per M il suo L(M) sia L_d. Poiché questa macchina è codificata su {0,1} allora dovrà esistere almeno un codice i per cui M = M_i. Ora la w_i (di M_i) è in L_d?
+                - Se w_i è in L_d e quindi in L(M), allora M_i accetta w_i. Ma per definizione di L_d w_i non può essere in L_d;
+                - Allora se w_i non è in L_d e quindi non è in L(M) allora M_i non accetta w_i. Per la definizione di L_d w_i è in L_d.
+                Poiché non può essere che w_i sia e non sia in L_d, siamo difronte ad una contraddizione.
+                Questo significa che non esiste una M che accetta L_d e quindi L_d non è RE.
+
+
+        * Se un linguaggio è ricorsivo lo è anche il suo complemento.
+                Sia M una TM che si arresta sempre ed L = L(M), costruiamo una TM M^c tale che L^c = L(M^c).
+                M^c si comporta esattamente come M e poiché è garantito che quest’ultima si arresti lo stesso vale anche per la prima. Gli stati accettanti di M diventano non accettanti (senza transizioni) per M^c; in questi stati M^c si arresta senza accettare. M^c ha un nuovo stato accettante r senza alcuna transizione uscente. Per ogni combinazione di uno stato non accettante e di un simbolo di nastro di M, tale che M non ha alcuna transizione (ovvero M si arresta senza accettare) si aggiunge una transizione verso lo stato accettante r.
+                Da ciò, le stringhe non accettate da M sono accettate da M^c e di conseguenza M^c accetta L^c.
+
+                @"Figura 9.3.pdf"
+
+
+        * Se un linguaggio ed il suo complemento sono ricorsivamente enumerabili allora il linguaggio è ricorsivo.
+                Siano M1 e M2 due TM simulate da una TM M, e siano L = L(M1) e L^c = L(M2).
+                Se l’input w di M è in L, M1 accetta e quindi M si arresta.
+                Se w non è in L e quindi è in L^c, M2 accetta ed M si arresta senza accettare.
+                Da ciò, M si arresta su tutti gli input ed L(M) = L, e per questo L è ricorsivo.
+
+                @"Figura 9.4.pdf"
+
+
+        * L_u è ricorsivamente enumerabile.
+                Dato il linguaggio universale L_u come l’insieme delle coppie (M,w), con M TM e w ∈ L(M), esiste una TM universale U tale che L_u = L(U).
+                U simula M su w e accetta la coppia codificata (M,w) se e solo se M accetta w.
+                Ma poiché w ∈ L(M), M accetta sempre w e quindi U accetta sempre L_u.
+                Quindi L_u è RE.
+
+
+        * L_u è ricorsivamente enumerabile ma non ricorsivo.
+                Sappiamo che L_u è RE poiché possiamo costruire una TM che accetta (e simula) L_u.
+                Supponiamo ora che L_u sia ricorsivo, ciò implica che anche {L_u}^c (il complemento di L_u) lo sia. Essendo {L_u}^c l’insieme delle coppie (M,w), con M TM e w ∉ L(M), se potessimo costruire una TM che accetta {L_u}^c potremmo anche costruire una TM che accetta L_d. Ma poiché sappiamo che L_d non è RE, ne ricaviamo una contraddizione e quindi {L_u}^c non può essere ricorsivo e di conseguenza neanche L_u.
+
+                @"Figura 9.6.pdf"
+
+        * Se esiste una riduzione da P1 a P2 allora:
+                 - se P1 è indecidibile lo è anche P2;
+                 - se P1 non è ricorsivamente enumerabile non lo è neanche P2.
+
+                 @"Teorema 9.7.pdf"
+
+
+        * L_ne è ricorsivamente enumerabile.
+                Sia M una NTM che riceve in input una TM M_i ed esegue in parallelo una TM universale U che simula M con input w, per ogni w appartenente o no a L_u.
+                Se M_i accetta almeno una stringa, M la costruisce e glie la dà in input; M_i accetta w e M accetta M_i.
+                Se invece L(M_i) = ø allora M_i non accetta alcuna w e M non accetta M_i.
+                Da ciò, L(M) = L_ne, ovvero il linguaggio accettato da M è esattamente il linguaggio composto dalle TM che accettano almeno una stringa.
+                Quindi L_ne è RE.
+
+                @"Figura 9.8.pdf"
+
+
+        * L_ne non è ricorsivo.
+                Costruiamo una TM M’ che sostituisce qualsiasi input con la stringa rappresentante una TM M e la stringa di input w (per M).
+                Poiché costruiamo Mì partendo dalla coppia (M,w) di lunghezza n, la costruiamo con n stati. Sia q_0 stato iniziale, negli stati q_i, per i = 0..n-1, M’ scrive il bit i+1 del codice di (M,w), va nello stato q_{i+1} e si sposta a destra.
+                Nello stato q_n, qualora sia necessario, M’ si muove verso destra rimpiazzando col blank eventuali simboli diversi dal blank (accade se la stringa originale in input per M’ è più lunga di n).
+                Quando M’ raggiunge un blank nello stato q_n, usa un’analoga serie di stati per ricollocare la testina all’estremità sinistra del nastro.
+                A questo punto M’ simula una TM universale U sul suo attuale nastro. Se U accetta allora anche M’ accetta, se U non accetta mai allora neanche M’ accetta mai.
+                Così facendo abbiamo ridotto L_u a L_ne.
+                Inoltre se M accetta w allora il codice di M’ si trova in L_ne; viceversa se M non accetta mai allora il codice di M’ non è in L_ne ma in L_e.
+                Poiché L_u non è ricorsivo non lo è neanche L_ne.
+
+                @"Figura 9.9.pdf"
+
+        * L_ne non è ricorsivo.
+                Poiché L_ne è RE, se L_e fosse RE allora entrambi sarebbero ricorsivi (in quanto complementari).
+                Ma poiché L_ne non è ricorsivo allora L_e non può essere RE.
+
+
+        * (Teorema di Rice) Ogni proprietà non banale dei linguaggi ricorsivamente enumerabili è indecidibile.
+                Sia:
+                 - P una proprietà non banale dei linguaggi RE (ovvero non sia vuota ne comprenda tutto RE) e supponiamo che ø ∉ P.
+                 - L_p l’insieme delle TM M_i tali che L(M_i) è un linguaggio in P.
+                Poiché P non può essere vuoto neanche il linguaggio L_p può esserlo.
+                Da ciò prendiamo un linguaggio L ∈ P e la TM M_l  che accetta L e che quindi ∈ L_p. (nota: L ∈ P e M_l ∈ L_p poiché P e L_p non sono linguaggi ma insiemi di linguaggi)
+                L’algoritmo per la riduzione riceve in input una qualsiasi coppia (M,w) e produce una TM M’.
+                La simulazione di M su w è incorporata in M’ che simula la TM universale; se M accetta w allora M’ simula M_l su x, con x ∈ L.
+                M_l accetta x in quanto x ∈ L ed L = L(M_l); per cui L(M’) = ø se M non accetta w, e L(M’) = L se M accetta w.
+                Da ciò ne deriva che M’ accetta L e quindi ∈ L_p se e solo se (M,w) ∈ L_u.
+                L’algoritmo di riduzione riduce L_u a L_p e quindi dimostra che P non è ricorsivo in quanto L_u non è ricorsivo.
+                Consideriamo il caso in cui ø ∈ P.
+                Poiché P non è ricorsivo lo stesso vale anche per P^c. {L_p}^c = L_{p^c} in quanto ogni TM accetta un solo linguaggio RE. Per cui, se L_p non è decidibile non lo è neppure L_{p^c}.
+
+                @"Figura 9.10.pdf"
+
+
+        * Sia P1 un problema NP-completo e P2 un problema appartenente a NP, se esiste una riduzione polinomiale di P1 a P2 allora P2 è NP-completo.
+                Sia:
+                 - L un linguaggio appartenente a NP;
+                 - w una stringa di lunghezza n appartenente a L;
+                 - x una stringa appartenente a P1;
+                 - y una stringa appartenente a P2.
+                Essendo P1 NP-completo esiste una riduzione polinomiale di L a P1 che impiega un tempo polinomiale p(n) e quindi w viene convertita in una x di lunghezza massima p(n).
+                In aggiunta esiste una riduzione polinomiale da P1 a P2 che impiega un tempo polinomiale q(m) e che trasforma x in una y impiegando un tempo massimo q(p(n)).
+                Pertanto la trasformazione da w in y impiega un tempo massimo di p(n) + q(p(n)) (che è ancora polinomiale). Da ciò L è riducibile a P2 in tempo polinomiale per ogni L ∈ NP.
+                Questo vuol dire che l’intera classe NP si riduce polinomialmente a P2 e che quindi P2 è NP-completo.
+
+
+        * Se un problema NP-completo R appartiene a P allora P = NP.
+                Se R fosse NP-completo e appartenesse a P allora ogni linguaggio L appartenente a NP si ridurrebbe in tempo polinomiale a R e quindi ogni L appartenente a NP apparterrebbe anche a P.
+                Quindi l’intera classe NP sarebbe uguale alla classe P.
+
+
+        * (Teorema di Cook) SAT è NP-completo.
+                Sia E un’espressione booleana codificata di lunghezza n.
+                Il tempo necessario per l’assegnamento di valori di verità per E su una macchina di Turing non deterministica multinastro è O(n). Essendo possibili solamente due assegnamenti di valori di verità per variabile allora esistono al più 2^n ID distinte possibili (ogni ID è una diramazione rappresentate un diverso assegnamento di valori di verità).
+                Valutiamo E per l’assegnamento di valori di verità T e se E(T) = 1 (vero) allora accettiamo. La valutazione dell’espressione E è deterministica e il fatto che altre diramazioni della NTM possano non condurre all’accettazione non influenza il risultato; per accettare basta un solo assegnamento soddisfacente di valori di verità. La valutazione viene effettuata in tempo O(n^2).
+                Da ciò l’intero riconoscimento di SAT da parte di una NTM multinastro richiede tempo O(n^2) e di conseguenza SAT appartiene alla classe NP.
+                Il secondo punto della NP-completezza non è richiesto conoscerlo.
+
+
+        * Per ogni espressione booleana E esiste un’espressione equivalente F in cui le negazioni compaiono solo nei letterali, cioè si applicano direttamente alle variabili. Inoltre la lunghezza di F è lineare nel numero di simboli di E, ed F si costruisce a E in tempo polinomiale.
+
+
+        * CSAT è NP-completo.
+
+
+        * 3SAT è NP-completo.
+                PROBLEMA: Soddisfacibilità di espressioni in 3-CNF (3SAT).
+                INPUT: Un’espressione booleana in 3-CNF.
+                OUTPUT: “si” se e solo se l’espressione è soddisfacibile.
+                RIDUZIONE DA: CSAT.
+
+                @"3SAT è NP-completo.pdf"
+
+
+        * Il problema dell’insieme indipendente (IS) è NP-completo.
+                PROBLEMA: Insieme indipendente (IS, Indipendent Set).
+                INPUT: Un grafo e un limite inferiore k, compreso fra 1 e il numero di nodi del grafo.
+                OUTPUT: “si” se e solo se il grafo ha un insieme indipendente di k nodi.
+                RIDUZIONE DA: 3SAT.
+
+                È facile vedere che IS è in NP: dato un grafo e un intero k, scegliamo k nodi arbitrari e verifichiamo se sono indipendenti.
+
+
+        * Il problema della copertura dei nodi (NC) è NP-completo.
+                PROBLEMA: Copertura per nodi (NC, Node Cover).
+                INPUT: Un grafo e un limite superiore k, compreso fra 0 e il numero di nodi del grafo meno uno.
+                OUTPUT: “si” se e solo se il grafo ha una copertura per nodi con non più di k nodi.
+                RIDUZIONE DA: IS.
+
+                Scegliamo un insieme di k nodi e verifichiamo che contenga almeno un estremo di ogni lato del grafo. NC è chiaramente in NP.
+
+                @"NC è NP-completo.pdf"
+
+
+        * Il problema del circuito hamiltoniano orientato (DHC) è NP-completo.
+                PROBLEMA: Problema del circuito hamiltoniano orientato (DHC, Directed Hamiltonian Circuit).
+                INPUT: Un grafo orientato.
+                OUTPUT: “si” se e solo se esiste nel grafo un ciclo orientato che passa per ogni nodo esattamente una volta.
+                RIDUZIONE DA: 3SAT.
+
+                È facile vedere provare che DHC è in NP: si sceglie un ciclo potenziale e si verifica che tutti i suoi archi siano presenti nel grafo.
+
+
+        * Il problema del circuito hamiltoniano (HC) è NP-completo.
+                PROBLEMA: Problema del circuito hamiltoniano (HC, Hamiltonian Circuit).
+                INPUT: Un grafo non orientato.
+                OUTPUT: “si” se e solo se il grafo ha un circuito hamiltoniano.
+                RIDUZIONE DA: DHC.
+
+
+        * Il problema del commesso viaggiatore (TSP) è NP-completo.
+                PROBLEMA: Problema del commesso viaggiatore (DHC, Directed Hamiltonian Circuit).
+                INPUT: Un grafo non orientato con pesi interi sui lati e un limite k.
+                OUTPUT: “si” se e solo se esiste nel grafo c’è un circuito hamiltoniano tale che la somma dei pesi dei lati che lo compongono è minore o uguale a k.
+                RIDUZIONE DA: HC.
+
+                Procediamo per induzione da HC. Dato un grafo G, costruiamo un grafo pesato G’ con gli stessi nodi e lati di G, ma con il peso 1 su tutti i lati. Il limite k è uguale al numero n di nodi di G. In G’ c’è un circuito hamiltoniano di peso n se e solo se in G c’è un circuito hamiltoniano.
+
+
+        * La classe dei linguaggi appartenenti a P è chiusa rispetto al complemento. Ovvero anche il complemento di un linguaggio appartenente a P appartiene a P.
+                Sia L un linguaggio appartenente a P e M una TM che accetta L.
+                Modifichiamo M in M' in modo che accetti L^c, introducendo un nuovo stato accettante q, facendo transitare M' in q quando M si arresta in uno stato non accettante e rendendo non accettanti gli stati accettanti di M.
+                M' accetta L^c nello stesso tempo di M con al più l’aggiunta di una transizione e di conseguenza L^c è in P se lo è L.
+
+
+        * La classe dei linguaggi co-NP.
+                @"La classe dei linguaggi co-NP.pdf"
+
+
+        * NP = co-NP se e solo se esiste un problema NP-completo il cui complemento è in NP.
+                (Solo se) Se NP e co-NP sono uguali allora ogni problema NP-completo L, trovandosi in NP, è anche in co-NP.  Dato che il complemento di un problema in co-NP è in NP, il complemento di L è in NP.
+
+                (Se) Sia R un problema NP-completo il cui complemento R^c è in NP. Per ogni linguaggio L in NP esiste dunque una riduzione polinomiale di L a R. La stessa riduzione è anche una riduzione polinomiale di L^c a R^c.
+                (La riduzione di L1 a L2 è la stessa riduzione di L1^c a L2^c poiché se sappiamo che L1 e L1^2 e L2 e L2^c sono nella stessa classe, allora esistono due TM M1 e M2, che accettano rispettivamente L1 e L2, e che possono essere convertite in due TM M1’ e M2’ che accettano L1^c e L2^c rispettivamente).
+
+                NP ⊆ co-NP: supponiamo L sia in NP allora L^c è in co-NP. Combiniamo la riduzione polinomiale di L^c a R^c con il presunto algoritmo polinomiale non deterministico per R^c per produrre un algoritmo polinomiale non deterministico per L^c. Ne segue che per ogni L in NP anche L^c è in NP. D’altra parte L^c è in co-NP perché è il complemento di un linguaggio in NP. Abbiamo dunque NP ⊆ co-NP.
+
+                co-NP ⊆ NP: supponiamo L sia in co-NP, allora esiste una riduzione polinomiale di L^c a R perché R è NP-completo ed L^c è in NP ed è contemporaneamente anche una riduzione di L a R^c. Poiché R^c è in NP, combiniamo la riduzione con l’algoritmo polinomiale non deterministico per R^c per dimostrare che L è in NP.
+
+
+        * Se M è una TM/NTM con limite polinomiale sullo spazio p(n), allora esiste una costante c tale che se M accetta un input w di lunghezza n lo fa entro c^{1+p(n)} mosse.
+                @"Teorema 11.3.pdf"
+
+                Possiamo ricorrere al suddetto teorema per convertire una TM con limite polinomiale sullo spazio in una equivalente che si arresta sempre dopo aver effettuato al massimo un numero esponenziale di mosse. Sapendo che la TM accetta entro un un numero esponenziale di mosse, possiamo contare quante mosse sono state effettuate e arrestare la TM se ha effettuato un numero sufficiente di mosse senza accettare.
+
+
+        * Se L è un linguaggio in PS (NPS) allora L è accettato da una TM (NTM) con limite polinomiale sullo spazio che si arresta dopo aver fatto al più c^{q(n)} mosse, per un polinomio q(n) e una costante c > 1.
+                @"Teorema 11.4.pdf"
+
+
+        * La funzione ricorsiva reach.
+                @"La funzione ricorsiva reach.pdf"
+
+
+        * (Teorema di Savitch) PS = NPS.
+                Sia L un linguaggio accettato da una NTM N con limite polinomiale sullo spazio p(n) e sia D una DTM con limite polinomiale sullo spazio q(n).
+
+                Sappiamo che se N accetta, lo fa in non più di c^{1+p(n)} passi per una costante c. Dato un input di lunghezza n, D scopre come si comporta N con input w ponendo ripetutamente sul nastro la tripla [I_0, J, m], dove:
+                - I_0 è la ID iniziale di N con input w,
+                - J è una qualsiasi ID accettante che usa al più p(n) celle di nastro (le diverse J sono enumerate sistematicamente da D mediante un nastro ausiliario),
+                - m = c^{1+p(n)},
+                e chiamando reach con questi argomenti.
+                Sappiamo che non ci sono più di log_{2}{m} chiamate ricorsive attive nello stesso momento, ovvero una con terzo argomento m, una con m/2, un’altra con m/4 e così via fino a 1. Di conseguenza non ci sono più di log_{2}{m} frame sullo stack e log_{2}{m} è O(p(n)).
+                Gli stack frame occupano ciascuno uno spazio O(p(n). Infatti ognuna delle due ID richiede di scrivere solo 1 + p(n) celle e scrivendo m in binario abbiamo bisogno di log_{2}{c^{1+p(n)}} = O(p(n)) celle. Di conseguenza l’intero stack frame, formato dalle due ID e da un intero, occupa uno spazio O(p(n)).
+                Poiché D ha al massimo O(p(n)) stack frame, lo spazio complessivo è O(p^2(n)). Questo spazio è un polinomio se lo è p(n).
+                Da ciò NPS ⊆ PS (poiché L è accettato da N e da D).
+                É evidente inoltre che PS ⊆ NPS dato che ogni DTM è anche una NTM.
+                Per cui PS = NPS.
+
+
+        * Sia R un problema PS-completo:
+                a) se R è in P, allora P = PS;
+                b) se R è in NP, allora NP = PS.
+
+                @"Teorema 11.6.pdf"
+
+
+* Teoria
+        * Alfabeto, Stringa e Linguaggio
+                [1.5.1/31]
+                Un alfabeto è un insieme finito e non vuoto di simboli.
+
+                [1.5.2/31]
+                Una stringa è una sequenza finita di simboli scelti da un alfabeto. La lunghezza di una stringa è data dal numero di posizioni che la compongono.
+
+                [1.5.3/33]
+                Un linguaggio è un insieme di stringhe scelte dall'insieme di tutte le stringhe su un alfabeto.
+
+                [1.5.2/32]
+                Sia E un alfabeto, E^k è l'insieme delle stringhe di lunghezza k, con simboli appartenenti a E.
+                E^0 = {stringa_vuota};
+                E^+ = E^1 + E^2 + E^3 + …;
+                E^* = E^0 + E^+;
+
+                Linguaggio ⊆ E^*;
+
+
+        * Problemi e Linguaggi
+                Un problema è la questione se una data stringa sia o no membro di un particolare linguaggio.
+                Il linguaggio di un problema è l'insieme delle stringhe che sono tutte e solo le istanze del problema che hanno soluzione 1.
+                I problemi si dicono decisionali se l’insieme delle soluzioni è {vero, falso} oppure {0, 1}, non entrambe contemporaneamente.
+                I problemi si dicono concreti se sia l'insieme delle istanze che quello delle soluzioni è codificato con stringhe.
+                Nei problemi concreti decisionali l’insieme delle soluzioni è sempre {0, 1}.
+
+
+        * Decidibilità e Trattabilità
+                La decidibilità è lo studio di che cosa può fare un computer in assoluto.
+                Un problema è decidibile se esiste un algoritmo che lo accetta.  I problemi accettabili da un computer sono detti decidibili.
+                Considerando il linguaggio L come un problema allora L è detto decidibile se si tratta di un linguaggio ricorsivo e indecidibile se non si tratta di un linguaggio ricorsivo.
+                L'intrattabilità è lo studio di cosa può fare un computer in maniera efficiente. I problemi risolvibili da un computer in un tempo limitato da una funzione lentamente crescente nella dimensione dell'input sono dette trattabili. Le funzioni polinomiali si considerano lentamente crescenti.
+
+                Per sapere se i problemi possono essere risolti in tempo polinomiale, l'algoritmo di riduzione stesso deve impiegare al massimo un tempo polinomiale.
+
+
+        * Macchina Di Turing
+                M = (
+                    {stati},
+                    {simboli di input},
+                    {simboli di nastro},
+                    funzione di transizione,
+                    stato iniziale,
+                    simbolo di blank,
+                    {stati accettanti}
+                );
+
+                FunzioneDiTransizione(stato attuale, simbolo di input) = (stato successivo, simbolo di output, direzione);
+
+                [8.2.5/346]
+                Sia M una macchina di Turing, allora L(M) è l’insieme delle stringhe w nell'insieme di tutte le stringhe sull'alfabeto di input tale che "q0 w" transita in zero/una/più-mosse in "a p b" con stato iniziale q0, qualsiasi stato accettante p e qualunque stringa di nastro a e b.
+                Ovvero, L(M) è l'insieme di tutte le stringhe di input di qualsiasi lunghezza che partendo dallo stato iniziale giungono in una o più mosse ad uno stato accettante.
+                Ovvero, L(M) è l'insieme dei linguaggi accettati dalla macchina di Turing M.
+
+                [8.2.6/347]
+                Una macchina di Turing accetta per arresto se entra in uno stato su un simbolo di nastro e la funzione di transizione è indefinita.
+                I linguaggi per cui esiste una macchina di Turing che prima o poi si arresta, indipendentemente se accetti o no, sono detti linguaggi ricorsivi.
+
+                È possibile simulare una macchina multinastro di n nastri utilizzando una macchina multitraccia di 2n tracce.
+
+                Il tempo di esecuzione di una macchina di Turing su di un input è il numero di movimenti che la macchina compie prima di arrestarsi. Se la macchina non si arresta sull'input il tempo di esecuzione è infinito.
+
+                Ogni macchina a contatori è un caso speciale di una macchina multistack che a sua volta è un caso speciale di una macchina di Turing multinastro, che accetta solo linguaggi ricorsivamente enumerabili.
+
+
+                * Descrizioni istantanee
+                        E possibile descrivere la configurazione corrente di una macchina mediante una stringa di lunghezza finita che include tutte le celle del nastro dal simbolo diverso dal blank più a sinistra a quello più a destra. Lo stato e la posizione della testina si indicano ponendo lo stato all'interno della sequenza dei simboli di nastro, alla sinistra della cella guardata.
+
+
+                * Memoria nel controllo finito
+                        Lo Stato può essere formato da due o più componenti. Un componente è quello del controllo, gli altri componenti contengono dati che la macchina deve ricordare.
+
+
+                * Tracce multiple
+                        È possibile immaginare i simboli di nastro come vettori con un numero fisso di componenti. Ogni componente è una traccia distinta del nastro.
+
+
+                * Macchine di Turing multinastro
+                        [8.4.1/356]
+
+
+                * Macchine di Turing non deterministiche
+                        [8.4.4/360]
+
+
+                * Macchine di Turing con nastro semi infinito
+                        [8.5.1/365]
+
+
+                * Macchine multistack
+                        [8.5.2/368]
+
+
+                * Macchine a contatori
+                        [8.5.3/371]
+
+
+                * Simulazione di una macchina di Turing da parte di un computer reale e simulazione di un computer da parte di una macchina di Turing
+
+
+                Distinguiamo i problemi che possono essere risolti da una macchina di Turing in due classi:
+                 - quelli per cui esiste un algoritmo, ovvero una macchina di Turing che si arresta a prescindere dal fatto che accetti o no il suo input;
+                 - e quelli che vengono risolti solo da macchine di Turing che possono girare per sempre su input non accettati.
+
+
+        * Linguaggi Ricorsivi e Ricorsivamente Enumerabili
+                Quando si parla di problemi decidibili si intende ricorsivi.
+                Quando si parla di problemi accettati si intende ricorsivamente enumerabili.
+
+                Il vettore caratteristico i del linguaggio L(M) è l'i-esima riga, ovvero le stringhe che appartengono al linguaggio (solo gli 1).
+
+                [9.1.3/393]
+                Il linguaggio di diagonalizzazione L_d è l'insieme delle stringhe w_i tali che w_i non è in L(M_i). L(M_i) è ∅ se w_i non è un codice valido.
+                Ovvero, il linguaggio di diagonalizzazione è l'insieme delle stringhe w tali che la macchina di Turing rappresentata da w non accetta l'input w.
+                Il linguaggio di diagonalizzazione non è un linguaggio ricorsivamente enumerabile, ovvero non esiste una macchina di Turing che lo accetta.
+
+                Il vettore caratteristico è la stringa/vettore di “1” e “0” delle stringhe che appartengono al linguaggio L(M), ovvero ai linguaggi accettati da M.
+
+                Il linguaggio di diagonalizzazione, ovvero il complemento della diagonale M_{i}w_{i}, è in disaccordo per almeno un valore (M_{i}w_{i} è in disaccordo con il suo complemento) con il vettore caratteristico di ogni M_i, quindi non può essere il vettore caratteristico di alcuna macchina di Turing.
+
+                [8.2.5/346]
+                I linguaggi ricorsivamente enumerabili sono quei linguaggi che una macchina di Turing può accettare.
+
+                [9.1/390]
+                Se un linguaggio è uguale a L(M) allora il linguaggio è ricorsivamente enumerabile (RE).
+
+                [9.2.1/396]
+                Se L = L(M) per una macchina di Turing tale che, data una stringa di input w:
+                - se w è in L allora M accetta (dunque si arresta);
+                - se w non è in L allora M si arresta pur non entrando in uno stato accettante.
+                allora L è un linguaggio ricorsivo.
+                Se un linguaggio è ricorsivo lo è anche il suo complemento.
+                Ovvero, i linguaggi ricorsivi sono quei linguaggi ricorsivamente enumerabili per cui esiste una macchina di Turing che si arresta, sia che li accetti che non.
+
+                L’esistenza o non non esistenza di un algoritmo per risolvere un problema è sovente più importante dell’esistenza di una macchina di Turing che risolve il problema. Una macchina di Turing senza garanzia di arresto non dà sufficienti informazioni per concludere che una stringa non si trova nel linguaggio.
+                Di conseguenza la distinzione di problemi e linguaggi in due classi, ossia i decidibili, che vengono risolti mediante un algoritmo, e gli indecidibili, è spesso più importante della divisione tra linguaggi ricorsivamente enumerabili (quelli per cui c’è una macchina di Turing) e linguaggi non ricorsivamente enumerabili (che non hanno alcuna macchina di Turing).
+
+                Se un linguaggio è ricorsivamente enumerabile ma il suo complemento no, allora il linguaggio non è ricorsivo.
+                Se un linguaggio ed il suo complemento sono ricorsivamente enumerabili, allora il linguaggio è ricorsivo.
+
+                Non RE (es. L_d) ⊃ RE (es. L_u) ⊃ Ricorsivo
+
+                [9.2.2/398]
+                - Sia il linguaggio che il suo complemento sono ricorsivi;
+                - Ne il linguaggio ne il suo complemento sono ricorsivamente enumerabili;
+                - Il linguaggio è ricorsivamente enumerabile e il suo complemento non è ricorsivamente enumerabile (e viceversa).
+
+                L’assunto indimostrabile secondo cui qualunque modo generale di computare permette solo di computare le funzioni ricorsive parziali è detto ipotesi di Church o tesi di Church-Turing.
+
+                [9.2.3/400]
+                Il linguaggio universale è l'insieme delle stringhe binarie che codificano una coppia (M, w), dove M è una macchina di Turing con alfabeto di input binario e w è una stringa in (0 + 1)* tale che w sia in L(M).
+                Ovvero, il linguaggio universale è l'insieme delle stringhe che rappresentano una macchina di Turing e un input da essa accettato.
+                Esiste una macchina di Turing universale U tale che L(U) = linguaggio universale.
+                Poiché la macchina di Turing universale è una stringa binaria, è anche una M_j e la possiamo trovare nell’elenco delle macchine di Turing con input binario.
+                La macchina di Turing universale simula la macchina di Turing M con input w e accetta la coppia (M,w) se e solo se M accetta w.
+
+                [9.2.4/402]
+                Il linguaggio universale è ricorsivamente enumerabile ma non ricorsivo (quindi indecidibile).
+
+                [9.3.2/408]
+                L_e è il linguaggio formato da tutte le macchine di Turing il cui linguaggio è vuoto.
+                L_ne è il linguaggio formato da tutte le macchine di Turing il cui linguaggio non è vuoto.
+                L_e e e L_ne sono complementari.
+
+                L_e  = {M | L(M) = ø}
+                L_ne = {M | L(M) ≠ ø}
+
+                [9.3.2/411]
+                Se un problema ed il suo complemento sono ricorsivi, allora sono lo stesso problema (basta invertire l’esito).
+                Ma se un problema è ricorsivamente enumerabile ed il suo complemento non è ricorsivamente enumerabile (non possono essere entrambi RE altrimenti sarebbero ricorsivi), allora i duo problemi sono distinti e come tali devono essere trattati.
+
+                [9.3.3/412]
+                Una proprietà dei linguaggi ricorsivamente enumerabili è un insieme di linguaggi ricorsivamente enumerabili.
+                Una proprietà è banale se è vuota, ossia non viene soddisfatta da nessun linguaggio, o se comprende tutti i linguaggi ricorsivamente enumerabili. In caso contrario è non banale.
+                Se P è una proprietà dei linguaggi ricorsivamente enumerabili, Lp è l'insieme dei codici di macchine di Turing M tali che L(M) è un linguaggio in P. Quando parliamo di decidibilità di una proprietà P, intendiamo la decidibilità del linguaggio Lp.
+                Ogni proprietà non banale dei linguaggi ricorsivamente enumerabili è indecidibile. (Teorema di Rice)
+                Ovvero, non si può creare un programma che dica cosa fa un altro programma.
+
+
+        * Riduzioni, Intrattabilità, problemi in P, NP ed NP-completi
+                [9.3.1/406]
+                Se abbiamo un problema T noto possiamo cercare di ridurlo ad un problema P ignoto e, in caso di successo, concludere che P è come T (RE, ricorsivo, non RE).
+                Il contrario non è possibile, ovvero ridurre un problema ignoto ad uno noto.
+
+                L_d è non ricorsivamente enumerabile e si può ridurre ad un problema solo se il problema è non ricorsivamente enumerabile.
+                L_u è RE non ricorsivo e si può ridurre ad un problema, a prescindere che sia o no ricorsivamente enumerabile.
+
+                [9.3.1/406]
+                Le riduzioni trasformano istanze positive in positive e istanze negative in negative.
+                Se esiste un algoritmo che converte le istanze di un problema P1 in istanze di un problema P2, entrambi aventi la stessa risposta (sia positiva che negativa), allora P1 si riduce a P2.
+
+                Una riduzione da P1 a P2 è una macchina di Turing che riceve un'istanza di P1 scritta sul nastro e si arresta con un'istanza di P2 sul nastro.
+
+                [10/438]
+                L'ipotesi non dimostrata per cui P != NP afferma che la classe dei problemi risolvibili da macchine di Turing non deterministiche che operano in tempo polinomiale include almeno alcuni problemi che non possono essere risolti da macchine di Turing deterministiche operanti in tempo polinomiale (per quanto il polinomio sia grande).
+
+                [10.1.5/446]
+                Una riduzione da P1 a P2 è polinomiale se il tempo impiegato è un polinomio nella lunghezza dell'istanza di P1. Da ciò la lunghezza dell'istanza di P2 è un polinomio nella lunghezza dell'istanza di P1.
+
+                Se possiamo decidere l'appartenenza a P2 di una stringa di lunghezza n in tempo O(n^k), allora possiamo decidere l'appartenenza a P1 di una stringa di lunghezza m in tempo O(m^j + (cm^j)^k), con m^j il tempo di traduzione e (cm^j)^k il tempo per decidere l'istanza risultante di P2.
+                Essendo c, j e k costanti, il tempo è polinomiale in m e P1 è in P.
+
+                [10/437]
+                Si dice intrattabile un problema non risolvibile in tempo polinomiale.
+
+                [10.1.1/438]
+                Una macchina di Turing M ha complessità in tempo (ovvero tempo di esecuzione) T(n), se dato un input di lunghezza n, M si arresta dopo aver fatto al massimo T(n) mosse, a prescindere dal fatto che accetti o no.
+
+                [10.1.1/438]
+                Sia M una macchina di Turing deterministica con input di lunghezza n e sia L = L(M), allora il linguaggio L è nella classe P (polinomiale) se M ha complessità polinomiale in tempo T(n).
+                Ovvero, un linguaggio è nella classe P se è un linguaggio accettato da una macchina di Turing che si arresta in tempo polinomiale.
+
+                [10.1.3/443]
+
+                Sia M una macchina di Turing non deterministica con input di lunghezza n e sia L = L(M), allora il linguaggio L è nella classe NP (polinomiale non deterministica) se M ha complessità polinomiale in tempo T(n) (non co sono sequenze di mosse più lunghe di T(n)).
+
+                [10.1.3/443]
+                P ⊆ NP, dato che ogni macchina di Turing deterministica è una macchina di Turing non deterministica senza possibilità di scelta fra mosse.
+                Sembra che NP contenga molti problemi non in P; questo accade perché una macchina di Turing non deterministica che opera in tempo polinomiale ha la capacità di congetturare un numero esponenziale di soluzioni possibili al problema e controllare ciascuna in tempo polinomiale, tutte contemporaneamente (ovvero in parallelo).
+
+                Un linguaggio L è NP-completo se è vero che:
+                - L è in NP;
+                - per ogni linguaggio L' appartenente a NP esiste una riduzione polinomiale di L' a L.
+
+                Si ritiene che P != NP e che tutti i problemi NP-completi siano in NP - P.
+                Se un problema NP-completo fosse in P allora P = NP.
+
+                [10.1.7/448]
+                Un linguaggio L è NP-hard se è possibile dimostrare la condizione 2 di NP-completezza (ogni linguaggio in NP si riduce a L in tempo polinomiale) ma non è possibile dimostrare la condizione 1 (che L appartiene a NP).
+
+                Un assegnamento di valori di verità per una data espressione booleana E assegna i valori vero o falso a ognuna delle variabili presenti in E.
+                Il valore di E rispetto a un assegnamento di valori di verità T, denotato come E(T) è il risultato della valutazione di E con ciascuna variabile x sostituita dal valore T(x) che T assegna a x.
+                Un'assegnamento di valori di verità soddisfa un'espressione booleana se la rende vera.
+                Una espressione booleana si dice soddisfacibile se esiste almeno un assegnamento di valore di verità che soddisfa l'espressione stessa.
+                Il problema della soddisfacibilità è la questione se una data espressione booleana assegnata è soddisfacibile.
+
+                Un problema SAT è l'insieme delle espressioni booleane codificate soddisfacibili.
+
+                Un letterale è una variabile o una variabile negata.
+                Una clausola è la disgiunzione logica (or) di uno o più letterali.
+                Un'espressione booleana si dice in forma normale congiuntiva (CNF) se è la congiunzione logica (and) di uno o più clausole.
+
+                Un problema CSAT è la questione se una data espressione booleana in CNF è soddisfacibile.
+                Un problema 3SAT è la questione se una data espressione booleana in CNF di clausole formate dalla disgiunzione logica di esattamente tre variabili è soddisfacibile.
+                Un problema KSAT è la questione se una data espressione booleana in k-CNF di clausole formate dalla disgiunzione logica di k variabili per k > 3 è soddisfacibile.
+
+                Due espressioni si dicono equivalenti se hanno lo stesso risultato per ogni assegnamento di valori di verità.
+
+                La riduzione da SAT a CSAT è la conversione di espressioni arbitrarie in espressioni equivalenti in CNF.
+                Ciò dimostrerebbe che CSAT è NP-completo.
+
+                Se T è un assegnamento di valori di verità che rende l'espressione booleana E vera allora esiste un'estensione S di T che rende l'espressione booleana F vera.
+                S è una estensione dell'assegnamento di verità T se assegna gli stessi valori di T alle variabili di T, pur potendo assegnare valori alle variabili assenti in T.
+
+                Per ogni espressione booleana E esiste un'espressione booleana equivalente F in cui le le negazioni compaiono solo nei letterali, ovvero si applicano direttamente alle variabili. La lunghezza di F è lineare nel numero di simboli di E e si costruisce da E in tempo polinomiale.
+
+                Un problema IS  è la questione dell'insieme indipendente.
+                Un problema NC  è la questione della copertura dei nodi.
+                Un problema DHC  è la questione del circuito hamiltoniano orientato.
+                Un problema HC  è la questione del circuito hamiltoniano non orientato.
+                Un problema TSP  è la questione del commesso viaggiatore.
+
+                A -> B = A si riduce a B.
+                SAT -> CSAT -> 3SAT;
+                3SAT -> IS -> NC;
+                3SAT -> DHC -> HC -> TSP;
+                SAT,CSAT,IS,NC,DHC,HC,TSP -> SAT.
+
+                Sia PS la classe di tutti e soli i linguaggi accettati da macchine di Turing deterministiche con limite polinomiale sullo spazio.
+                Sia NPS la classe formata dai linguaggi accettati da macchine di Turing non deterministiche con limite polinomiale sullo spazio.
+
+                PS ⊆ NPS
+
+                Se M è una DTM/NTM con limite polinomiale sullo spazio p(n) allora esiste una costante c tale che se M accetta un input w di lunghezza n lo fa entro c^(1+p(n)) mosse.
+                Se L è un linguaggio in PS (NPS) allora L è accettato da una DTM (NTM), con limite polinomiale sullo spazio, che si arresta dopo aver fatto al più c^q(n) mosse per un polinomio q(n) e una costante c > 1.
+
+                PS = NPS. (Teorema di Savitch)
+
+                Un problema P è completo per PS (ovvero PS-completo) se è vero che:
+                - P è in PS;
+                - ogni linguaggio in PS è riducibile a P in tempo polinomiale.
+
+                Sia F un problema PS-completo:
+                - se F è nella classe P, allora P = PS;
+                - se P è nella classe NP, allora NP = PS.
+
+                Una formula booleana con quantificatore (QBF) è un'espressione booleana con l'aggiunta degli operatori ∀ (per ogni) ed ∃ (esiste).
+                (∀x)(E) significa che E è vera quando tutte le occorrenze di x in E sono sostituite dal valore booleano vero e che è vera quando tutte le occorrenze di x in E sono sostituite dal valore booleano falso.
+                (∃x)(E) significa che E è vera quando tutte le occorrenze di x in E sono sostituite dal valore booleano vero o quando tutte le occorrenze di x in E sono sostituite dal valore booleano falso, oppure in entrambi i casi.
+
+                Il problema QBF è la questione se una data QBF E priva di variabili libere ha valore di verità vero.
+
+                L'occorrenza di una variabile booleana x è vincolata se x si trova nella portata di un quantificatore per x.
+
+                Il problema QBF è PS-completo.

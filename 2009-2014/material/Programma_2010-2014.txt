@@ -1,0 +1,3 @@
+Tutto quanto è nel programma 2009 più:
+- le macchine di Turing randomizzate;
+- la crittografia.

@@ -1,0 +1,38 @@
+PROGRAMMA DETTAGLIATO
+Quando parlerò di paragrafi del libro, mi riferirò al libro di testo “Automi, linguaggi e Calcolabilità” Addison-Weasley seconda o terza edizione. Ovviamente essendo uscita la terza edizione in Italiano, è meglio usare quest'ultima. Se dico “Paragrafo 1.3” intendo tutti i sotto paragrafi di quello (ad esempio 1.3.1, 1.3.2, 1.3.3, 1.3.4). Altrimenti li dico in modo esplicito.
+
+Da leggere ma non li chiedo agli esami “in quanto tali” sono alcuni paragrafi del primo Capitolo. E sono: Paragrafo 1.2 e 1.3 che sono molto importanti. In questo corso bisogna attenersi al modo di esprimersi e di dimostrare le cose che viene usato dai matematici. E in questi due paragrafi c'è una
+sintesi di questo modo di esprimersi. Come quando si vuole imparare un linguaggio di programmazione e si leggono i capitoli iniziali di un manuale di quel linguaggio. Poi, un poco meno importanti, 1.4.1 e 1.4.2 Il Paragrafo 1.5 importante. E' cosi' importante che ho aggiunto una parte nella prima lezione registrata che viene dal Cormen Leiserson Rivest, il capitolo sulla Classe P e NP. Si tratta in generale dei problemi astratti, che sono delle relazioni tra l'insieme delle istanze
+e l'insieme delle (possibili) soluzioni. Mi sembra di avervi fornito delle copie di questo capitolo.
+
+ Ad esempio il problema di trovare un cammino minimo tra due nodi di un grafo è una relazione tra l'insieme delle istanze, che sono delle triple del tipo (G,n1,n2) (ovvero grafo, nodo n1 e nodo n2) e le soluzioni possibili che sono dei cammini nel grafo G. Il problema è una relazione perché non è  detto che esista un unico cammino minimo da n1 a n2 e a una istanza si associano nella relazione tutte le soluzioni, che, in questo caso sono tutti i cammini minimi.  Nel caso in cui si è sicuri che se c'è una soluzione allora questa soluzione è unica allora la relazione è una funzione.
+
+Di solito questo avviene nei problemi DECISIONALI, che sono quei problemi in cui l'insieme delle soluzioni è {vero, falso} oppure {0,1}, oppure{si,no} (un insieme binario in generale). Quindi in questo corso si considera che un istanza di un problema decisionale ha al più una sola soluzione, o vero o falso, non tutte e due le cose (vero e falso contemporaneamente, non è possibile).
+
+I problemi si dicono CONCRETI se sia l'insieme delle istanze che quello delle soluzioni è codificato con stringhe. Nei problemi concreti decisionali l'insieme delle soluzioni è sempre {0,1}. Esistono tanti modi per codificare i grafi ad esempio. Se ne sceglie uno e la codifica si considera parte integrante del problema. Ci sono problematiche inerenti le codifiche che sono descritte nel capitolo del Cormen Leiserson Rivest ma non non le trattiamo in questo corso.
+
+Ai problemi CONCRETI e DECISIONALI si può associare un linguaggio e viceversa.
+Il linguaggio di un problema è l'insieme delle stringhe che sono tutte e solo le istanze del problema che hanno soluzione 1 (ovvero “vero” ovvero “si”) e viceversa a un linguaggio L corrisponde il problema dell'appartenenza: “La stringa x appartiene a L?”.
+Questo viene descritto nel Capitolo che avete del Cormen Leiserson Rivest e anche  nel paragrafo 1.5.4 che è dunque particolarmente importante insieme con il riquadro  dal titolo “linguaggio o problema?”
+Per il nostro libro di testo NON ESISTONO ALTRI PROBLEMI ALL'INFUORI dei problemi decisionali concreti. Sviluppa tutta la teoria solo su questo tipo di problemi e ha ragione nel senso che tutta la difficoltà di questa teoria è presente anche se si fa questa restrizione. Per il nostro libro di testo quindi, quando si dice problema si intende “problema decisionale concreto”.
+
+Torniamo al programma dettagliato Capitolo 8. SALTARE IL PARAGRAFO 8.1. Quello che c'è scritto è corretto ma 4 persone su 5 sbagliano gravemente nel ripeterlo (e quindi non lo hanno capito, ovviamente). Si può rileggere dopo avere fatto bene tutto il corso, se non avete paura di essere indotti a sbagliare. Fare dunque 8.2, 8.3, 8.4, 8.5 NON FARE 8.6 e fare 8.7.
+
+Al Capitolo 8 si associa la tesi di Church-Turing presa dalle dispense del corso disattivato di Fondamenti 1, che dovreste avere tutti voi.
+Sapere rispondere alle domande: perché ho detto che si associa il Capitolo 8 alla tesi di Church-Turing? L'esperienza di Church sulla cui base Church ha enunciato la tesi, da che cosa era fondata? Per ogni modello di Calcolo noto, esiste un teorema che ne dimostra l'equivalenza con il modello delle Macchine di Turing (anche se noi non necessariamente lo abbiamo provato)? Il linguaggio di programmazione C, è equivalente al modello delle Macchine di Turing? C'è un teorema?
+
+Nel Capitolo 8 sono particolarmente importanti i risultati sul multitraccia e sul non-determinismo (con l'analisi dei tempi di simulazione da parte di macchine deterministiche).
+
+Capitolo 9. 9.1, 9.2, 9.3 NON FARE il 9.4 e il 9.5. FARE il 9.6
+Questo è il capitolo centrale della teoria. Ho detto più volte che chi non ha capito il teorema 9.2 e il teorema 9.7 con le sue conseguenze è inutile che si presenti. I paragrafi 9.3.2 e 9.3.3 e 9.3.4 sono più difficili. Chi li capisce ha voti più alti!!!
+
+Sempre per chi vuole voti alti o altissimi  (parte obbligatoria per i matematici che seguono il corso) fare la parte di cardinalità degli insiemi dalla dispensa del corso disattivato di Fondamenti 1, che
+sarebbe il Capitolo 3 della dispensa.
+
+Capitolo 10 è più veloce dire cosa NON FARE del capitolo 10 Del Teorema 10.9  NON fare la dimostrazione che SAT è NP completo (ma ovviamente sapere che lo è) ma fare la dimostrazione che SAT è in NP. Sono i primi 15 righi della dimostrazione del Teorema 10.9.
+Non fare la parte difficile del Teorema 10.21  ma fare SOLO la dimostrazione che DHC è in NP che sono i primi 4 righi della dimostrazione. Delle NP completezze si devono dimostrare quelle di CSAT, 3SAT, IS, NC, HC, TSP. Di tutti, inclusi SAT e DHC, fare la dimostrazione che sono in NP (e fare bene gli enunciati dei problemi). Chi vuole può saltare alcune prove di  NP completezza  e portamene solo una a scelta che non sia quella di NC. Se me ne portate di più di una si può includere NC. Fare in più dal Cormen Leiserson Rivest il teorema che dice che la classe P (definita come la classe dei problemi DECISI in tempo polinomiale) è uguale alla classe dei problemi ACCETTATI in tempo polinomiale. Fare inoltre la definizione alternativa della classe NP tramite un algoritmo deterministico di VERIFICA.
+
+Commenti al Capitolo 10. Attenzione ad usare la parola risolvibile o risolubile nel caso di problemi.
+Non è stata definita. Quindi bisogna dimostrare che accettazione e decisione in presenza di risorse limitate di tempo (o di spazio, come si vede nel capitolo 11) collassano in decisione, ovvero tutti  i problemi accettati in tempo polinomiale sono anche decisi. Questo è dimostrato nel riquadro “UNA VARIANTE DELL'ACCETTAZIONE NONDETERMINISTICA” o equivalentemente nel teorema del Cormen Leiserson  Rivest che dice che la classe P dei linguaggi DECISI in tempo polinomiale deterministico coincide con la classe dei problemi ACCETTATI in tempo polinomiale deterministico. Il nostro libro lo dice per il non determinismo e poi dice che funziona anche per il determinismo, il Cormen etc lo fa solo nel caso determinisico ma in modo più esplicito (enuncia un teorema, non come osservazione in un riquadro).
+
+Capitolo 11.Paragrafi 11.1, 11.2 e dell' 11.3 solo il teorema 11.6 e conoscere  (enunciare) il problema QBF, sapere che è PS completo ma non fare la prova del fatto che è in PS. Non fare da 11.3.3 a seguire. Nota: nel Teorema 11.2 io posso chiedere: perché una riduzione da un linguaggio L1 a L2 è anche una riduzione dal linguaggio complemento di L1 al complemento di L2?
