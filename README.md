@@ -1,5 +1,5 @@
 Documents, code and notes developed by students and teachers
-of the **University of L'Aquila** for the courses of the **Computer Science** department (DSIM).
+of the **University of L'Aquila** for the courses of the **Computer Science** department (DISIM).
 
 
 ## HowTo Git
